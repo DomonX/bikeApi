@@ -7,6 +7,7 @@ export class AppController {
 
   @Get()
   public getHello(): string {
+    this.connection.synchronize(true);
     return `${this.connection.isConnected}`;
   }
 }

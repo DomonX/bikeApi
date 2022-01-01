@@ -1,7 +1,7 @@
 import { User } from 'src/user/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity(CreditCard.name, { synchronize: false })
+@Entity(CreditCard.name)
 export class CreditCard {
   @PrimaryGeneratedColumn() id: number;
   @Column() cardNumber: number;
@@ -9,5 +9,6 @@ export class CreditCard {
   @Column() ccv: number;
 
   @ManyToOne(() => User, (user) => user.cards)
+  @JoinColumn( { name: 'userId'})
   user: User;
 }

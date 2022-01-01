@@ -1,3 +1,5 @@
+import { Reservation } from './../bike/bike.entity';
+import { Route } from './../route/route.entity';
 import { CreditCard } from '../credit-card/credit-card.entity';
 import { UserAccount } from './user-account.entity';
 import {
@@ -9,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity(User.name, { synchronize: false })
+@Entity(User.name)
 export class User {
   @PrimaryGeneratedColumn() id: number;
 
@@ -18,9 +20,14 @@ export class User {
   @Column() lastName: string;
 
   @OneToOne(() => UserAccount, (account) => account.user, { cascade: true })
-  @JoinColumn({ name: 'accountId' })
   account: UserAccount;
 
-  @OneToMany(() => CreditCard, (card) => card.user, { cascade: true })
+  @OneToMany(() => CreditCard, (card) => card.user, { cascade: true, eager: true })
   cards: CreditCard[];
+
+  @OneToMany(() => Route, (route) => route.user)
+  routes: Route[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[];
 }
