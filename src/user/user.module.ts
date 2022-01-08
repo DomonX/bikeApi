@@ -1,3 +1,4 @@
+import { Reservation } from './../bike/bike.entity';
 import { RouteCheckpoint } from './../route/route-checkpoint.entity';
 import { PaymentService } from './../payment/payment.service';
 import { Module } from '@nestjs/common';
@@ -9,7 +10,7 @@ import { Route } from 'src/route/route.entity';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User, UserAccount, Route, RouteCheckpoint])],
+  imports: [TypeOrmModule.forFeature([User, UserAccount, Route, RouteCheckpoint, Reservation])],
   providers: [PaymentService]
 })
 export class UserModule {}

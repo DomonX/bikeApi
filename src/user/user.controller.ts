@@ -1,3 +1,4 @@
+import { Reservation } from './../bike/bike.entity';
 import { PaymentService } from './../payment/payment.service';
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -5,13 +6,12 @@ import { CreditCard } from 'src/credit-card/credit-card.entity';
 import { UserAccount } from 'src/user/user-account.entity';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { Route } from 'src/route/route.entity';
 
 @Controller('user')
 export class UserController {
   constructor(
   @InjectRepository(User) private repository: Repository<User>, 
-  @InjectRepository(Route) private routeRepository: Repository<Route>,
+  @InjectRepository(Reservation) private reservationRepository: Repository<Reservation>,
   private paymentService: PaymentService) {}
 
   @Get()
@@ -31,6 +31,25 @@ export class UserController {
       .select(['account.*', 'user.*'])
       .whereInIds(id)
       .execute();
+  }
+
+  @Get(':id/reservations')
+  public getReservations(@Param('id') id: string): Promise<Reservation[]> {
+    return this.reservationRepository
+      .createQueryBuilder('reservation')
+      .where(`reservation.userId = ${id}`)
+      .select(['*'])
+      .execute()
+  }
+
+  
+  @Get(':id/reservations/:status')
+  public getReservationsWithStatus(@Param('id') id: string, @Param('status') status: string): Promise<Reservation[]> {    
+    return this.reservationRepository
+      .createQueryBuilder('reservation')
+      .where(`reservation.userId = ${id}`).andWhere(`reservation.isActive = ${status === 'inactive' ? false : true }`)
+      .select(['*'])
+      .execute()
   }
 
   @Post()

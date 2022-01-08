@@ -5,7 +5,6 @@ import { UserAccount } from './user-account.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
