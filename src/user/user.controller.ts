@@ -3,7 +3,7 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreditCard } from 'src/credit-card/credit-card.entity';
 import { UserAccount } from 'src/user/user-account.entity';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { Route } from 'src/route/route.entity';
 
